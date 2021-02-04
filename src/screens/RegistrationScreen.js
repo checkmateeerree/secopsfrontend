@@ -100,7 +100,6 @@ const RegistrationScreen = () => {
 
             const res = await axios.post("https://secopsapi.herokuapp.com/api/registeredpassword", {email, password})
             console.log(res)
-            
             window.location.href = "/login";
             
         }

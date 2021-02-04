@@ -5,7 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 const ProfilePreview = () => {
     return (
         <Container>
-            <div className="py-3" style={{color: "black", "text-align": "center"}}>
+            <div className="py-3" style={{color: "black", "textAlign": "center"}}>
             <Card style={{ width: '100%'}}>
                         <Card.Header><h1>Profile Preview</h1></Card.Header>
                         <Card.Img variant="top" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.vanasconstruction.com%2Fwp-content%2Fuploads%2F2014%2F10%2FPicture-1-LHS-NIGHT_ENTRANCE.jpg&f=1&nofb=1" />

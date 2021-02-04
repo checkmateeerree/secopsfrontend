@@ -12,7 +12,7 @@ const OurMission = () => {
                 <p>This club will teach members the theory and applications of hacking and ethics/laws surrounding the fields of hacking.
                 Alongside helping our members learn essential skills, they'll be able to make friends with each other, get to know each other, and have fun. This isn't just an academic/educational club; it's also meant to be a social one.</p>      
                 <div className="text-center">
-                    <LinkContainer to="/doc/0">
+                    <LinkContainer to="/doc">
                         <Button variant="dark" size="lg">Learn More</Button>  
                     </LinkContainer>
                 </div>
