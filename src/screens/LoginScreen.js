@@ -25,7 +25,7 @@ const LoginScreen = () => {
             const token = res.data.token 
             if (token){
                 localStorage.setItem("token", token)
-                setTimeout(logOutFunction, res.data.expiresIn)
+                setTimeout(logOutFunction, res.data.expiresIn * 1000)
                 window.location.href = "/"
             }
             
