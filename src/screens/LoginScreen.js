@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import {Form, Button, Row, Col, Container} from 'react-bootstrap'
 
 const LoginScreen = () => {
@@ -13,10 +14,6 @@ const LoginScreen = () => {
     const passwordListener = (e) => {
         changePassword(e.target.value)
     }
-    const logOutFunction = (e) => {
-        localStorage.removeItem('token')
-        window.location.href = "/"
-    }
     const submitListener = async(e) => {
         e.preventDefault()
         axios.post('https://secopsapi.herokuapp.com/api/login', {
@@ -24,8 +21,7 @@ const LoginScreen = () => {
         }).then((res) => {
             const token = res.data.token 
             if (token){
-                localStorage.setItem("token", token)
-                setTimeout(logOutFunction, res.data.expiresIn * 1000)
+                Cookies.set('token', token, { path: '/', expires: res.data.expiresIn/24/60/60})
                 window.location.href = "/"
             }
             

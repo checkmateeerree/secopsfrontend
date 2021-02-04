@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { Card, Container, Col, Row, Button, Form } from 'react-bootstrap'
 
-const token = localStorage.getItem('token')
+const token = Cookies.get('token')
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState()

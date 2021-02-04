@@ -12,9 +12,11 @@ import LoggedInHomescreen from './LoggedInComponents/LoggedInHomescreen'
 import LoggedInProfile from './LoggedInComponents/LoggedInProfile'
 import AdminDashboard from './LoggedInComponents/AdminDashboard'
 import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie'
 
 function App() {
-    const token = localStorage.getItem('token')
+    
+    const token = Cookies.get('token')
     try {
       const decodedToken = jwt_decode(token)
       const studentID = decodedToken.studentID

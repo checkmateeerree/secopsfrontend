@@ -1,11 +1,19 @@
 import React from 'react'
+import Cookies from 'js-cookie'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container} from 'react-bootstrap'
 
 const LoggedInHeader = ({isAdmin}) => {
         const logOutFunction = () => {
-            localStorage.removeItem("token")
+            Cookies.remove('token')
             window.location.href = "/"
+        }
+        const checkForCookies = () => {
+            const token = Cookies.get('token')
+            if (!token){
+                window.location.href="/"
+                return 
+            }
         }
         return (
                 <header>
@@ -20,17 +28,17 @@ const LoggedInHeader = ({isAdmin}) => {
                                 <Nav className="ml-auto">
                                     {isAdmin ? 
                                     <LinkContainer to="/admindashboard">
-                                        <Nav.Link>Admin Dashboard</Nav.Link>
+                                        <Nav.Link onClick={checkForCookies}>Admin Dashboard</Nav.Link>
                                     </LinkContainer> : ''}
                                     <LinkContainer to="/doc">
-                                        <Nav.Link>Official Club Document</Nav.Link>
+                                        <Nav.Link onClick={checkForCookies}>Official Club Document</Nav.Link>
                                     </LinkContainer>
                                     <LinkContainer to="/profile">
-                                        <Nav.Link>Profile</Nav.Link>
+                                        <Nav.Link onClick={checkForCookies}>Profile</Nav.Link>
                                     </LinkContainer>
                                     
                                     <LinkContainer to="/donate">
-                                        <Nav.Link>Donate</Nav.Link>
+                                        <Nav.Link onClick={checkForCookies}>Donate</Nav.Link>
                                     </LinkContainer>
 
                                     <Nav.Link onClick={() => window.location.href="https://zoom.us"}>Club Zoom Link</Nav.Link>
