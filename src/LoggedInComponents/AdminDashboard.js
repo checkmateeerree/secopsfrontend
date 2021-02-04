@@ -7,6 +7,7 @@ const token = Cookies.get('token')
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState()
+    const [meetingDate, setMeetingDate] = useState("")
     const [meetingsAttended_, setMeetingsAttended_] = useState()
     useEffect(() => {
         const fetchData = () => {
@@ -15,6 +16,10 @@ const AdminDashboard = () => {
         })} 
         fetchData()
     }, [])
+
+    const handleMeetingDateChange = (e) =>{
+        setMeetingDate(e.target.value)
+    }
 
     if (!users) {
         return (
@@ -25,16 +30,23 @@ const AdminDashboard = () => {
             </div>
         )
     }else {
+
         const changeTotalMeetings = (e) => {
             setMeetingsAttended_(parseInt(e.target.value))
         }
 
         const submitHandler = (e) => {
             e.preventDefault()
-            console.log(meetingsAttended_)
-            axios.put('https://secopsapi.herokuapp.com/api/changetotalmeetings', {meetingsAttended_}, {headers: {authorization: `Bearer ${token}`}}).then((res) => {
+            if (meetingsAttended_ === 0 || meetingsAttended_){
+                axios.put('https://secopsapi.herokuapp.com/api/changetotalmeetings', {meetingsAttended_}, {headers: {authorization: `Bearer ${token}`}}).then((res) => {
                 console.log(res)
-            })
+                window.location.reload()
+            })}
+            if (meetingDate){
+                axios.post("https://secopsapi.herokuapp.com/api/adddate", {meetingDate}, {headers: {authorization: `Bearer ${token}`}}).then((res) => {
+                console.log(res)
+                window.location.reload()
+            })}
         }
         return (
             
@@ -43,13 +55,28 @@ const AdminDashboard = () => {
                     <h1 className="text-center" style={{"paddingBottom": "1vh"}}>Club Members</h1>
                     <div style={{"display": "flex", "justifyContent": "space-around", "paddingBottom": "4vh"}}>
                     <Form className="text-center" onSubmit={submitHandler}>
-                        <Form.Group controlId="formBasicText">
-                            <Form.Label><h4>Change Total Meetings</h4></Form.Label>
-                            <Form.Control type="text" placeholder="Enter total meetings" onChange={changeTotalMeetings}/>
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Change
-                        </Button>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="formBasicText">
+                                <Form.Label><h4>Change Total Meetings</h4></Form.Label>
+                                <Form.Control type="text" placeholder="Enter total meetings" onChange={changeTotalMeetings}/>
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Change
+                            </Button>
+                            </Col>
+                            <Col xs="auto">       
+                                <Form.Group controlId="formBasicText">
+                                    <Form.Label><h4>Add Meeting Date (format: 2021-04-05)</h4></Form.Label>
+                                    <Form.Control onChange={handleMeetingDateChange} type="text" placeholder="Enter date"/>
+                                </Form.Group>
+                                <Button variant="primary" type="submit">
+                                    Add Meeting Date!
+                                </Button>
+                            </Col>
+                        </Row>
+                        
+                      
                     </Form>
                     </div> 
                     <Row>
