@@ -13,6 +13,10 @@ const LoginScreen = () => {
     const passwordListener = (e) => {
         changePassword(e.target.value)
     }
+    const logOutFunction = (e) => {
+        localStorage.removeItem('token')
+        window.location.href = "/"
+    }
     const submitListener = async(e) => {
         e.preventDefault()
         axios.post('https://secopsapi.herokuapp.com/api/login', {
@@ -21,6 +25,7 @@ const LoginScreen = () => {
             const token = res.data.token 
             if (token){
                 localStorage.setItem("token", token)
+                setTimeout(logOutFunction, res.data.expiresIn)
                 window.location.href = "/"
             }
             
